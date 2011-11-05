@@ -1,3 +1,4 @@
-import "nodes"
-
-filebucket { main: server => "www.giasudientu.com" }
+node default {
+  include monit
+  monit::package { "mysql": }
+}
