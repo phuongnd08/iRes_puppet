@@ -24,3 +24,5 @@ gpgcheck=0
 yum install puppet
 == To apply this configuration
 puppet --modulepath ./modules manifests/site.pp
+== Check all puppet
+verify_puppets_and_templates.sh
