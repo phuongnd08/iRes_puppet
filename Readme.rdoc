@@ -24,5 +24,8 @@ gpgcheck=0
 yum install puppet
 == To apply this configuration
 puppet --modulepath ./modules manifests/site.pp
+== To set a username and password for monit
+Supply MONIT_LOGIN && MONIT_PASSWORD
+The monit httpd server will then be accessible on port 2812
 == Check all puppet
 verify_puppets_and_templates.sh

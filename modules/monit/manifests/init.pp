@@ -5,8 +5,6 @@ class monit {
         default: { fail("\$operatingsystem of ${fqdn} is not recognized ( '${operatingsystem}' ). ") }
     }
 
-    $monitrc = "monit/monitrc.erb"
-
     package {
         "monit": ensure => installed;
     }
@@ -18,27 +16,27 @@ class monit {
     }
 
     file {
-        $configdir:
+        '/etc/monit.d':
             ensure => directory;
-        $config:
-            ensure => present,
-            content => template($monitrc),
+        '/etc/monit.conf':
+            content => template('monit/monitrc.erb'),
+            mode => 0400,
             group => root,
-            require => File[$configdir],
+            require => File['/etc/monit.d'],
+            before => Service[monit],
             notify => Service[monit],
-            mode => 0700;
     }
 }
 
 define monit::package()
 {
     file { $name:
-            path => "$monit::configdir/${name}.conf",
+            path => "/etc/monit.d/${name}.conf",
             ensure => present,
             content => template("monit/${name}.conf.erb"),
             group => root,
-            require => File[$monit::configdir],
+            require => File['/etc/monit.d'],
             notify => Service[monit],
-            mode => 0700;
+            mode => 0400;
     }
 }

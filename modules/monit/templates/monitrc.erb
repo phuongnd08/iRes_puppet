@@ -1,1 +1,9 @@
+set daemon 120
+set mailserver localhost
+set alert phuongnd08@gmail.com
+<% if ENV["MONIT_LOGIN"] && ENV["MONIT_PASSWORD"] %>
+set httpd port 2812 address localhost
+  allow
+  allow <%= ENV["MONIT_LOGIN"] %>:<%= ENV["MONIT_PASSWORD"]%>
+<% end %>
 include /etc/monit.d/*
