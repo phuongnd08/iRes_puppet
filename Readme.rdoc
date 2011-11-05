@@ -1,9 +1,26 @@
 Install puppet on CentOS
 == Create  /etc/yum.repos.d/puppet.repo
-[puppetlabs]
+[puppet]
 name=Puppet Labs Packages
-baseurl=http://yum.puppetlabs.com/base/
-enabled=0
+baseurl=http://yum.puppetlabs.com/el/$releasever/products/$basearch
+enabled=1
 gpgcheck=0
+
+[puppet_dependencies]
+name=Puppet Labs Packages
+baseurl=http://yum.puppetlabs.com/el/$releasever/dependencies/$basearch
+enabled=1
+gpgcheck=0
+
+[epel]
+name=Extra Packages for Enterprise Linux 5 - $basearch
+#baseurl=http://download.fedoraproject.org/pub/epel/5/$basearch
+mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=epel-5&arch=$basearch
+failovermethod=priority
+enabled=1
+gpgcheck=0
+
 == Install puppet
 yum install puppet
+== To apply this configuration
+puppet --modulepath ./modules manifests/site.pp
