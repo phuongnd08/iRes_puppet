@@ -20,7 +20,7 @@ class monit {
             ensure => directory;
         '/etc/monit.conf':
             content => template('monit/monitrc.erb'),
-            mode => 0400,
+            mode => 0600,
             group => root,
             require => File['/etc/monit.d'],
             before => Service[monit],
@@ -37,6 +37,6 @@ define monit::package()
             group => root,
             require => File['/etc/monit.d'],
             notify => Service[monit],
-            mode => 0400;
+            mode => 0600;
     }
 }
