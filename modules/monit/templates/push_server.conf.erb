@@ -1,0 +1,3 @@
+check process push_server with pidfile /home/root/push_app/current/tmp/thin.pid
+  start program = "/bin/env PATH=<%= `echo $PATH` %> /bin/sh -c 'cd /home/root/push_app/current && bundle exec thin -C thin/production.yml -R config.ru start'"
+  stop program = "/bin/env PATH=<%= `echo $PATH` %> /bin/sh -c 'cd /home/root/push_app/current && bundle exec thin -C thin/production.yml -R config.ru stop'"
