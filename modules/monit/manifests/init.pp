@@ -9,10 +9,10 @@ class monit {
         "monit": ensure => installed;
     }
 
-    service { monit:
+    service { "monit":
         ensure => running,
+        enable => true,
         require => Package["monit"],
-        provider => init;
     }
 
     file {
