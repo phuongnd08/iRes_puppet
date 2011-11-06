@@ -4,5 +4,6 @@ node default {
   monit::package { "nginx": }
   monit::package { "mysql": }
   monit::package { "push_server": }
+  monit::package { "sshd": }
 }
 
