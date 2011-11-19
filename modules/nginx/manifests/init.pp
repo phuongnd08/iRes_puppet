@@ -4,4 +4,6 @@ class nginx {
       content => template('nginx/nginx.erb'),
       mode => 0700
   }
+
+  monit::package { "nginx": }
 }
