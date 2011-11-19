@@ -1,9 +1,10 @@
 node default {
   include monit
+  include sshd
   include nginx
   include mysql
   include redis
-  monit::package { "push_server": }
-  monit::package { "sshd": }
+  include push_server
+  include resque
 }
 

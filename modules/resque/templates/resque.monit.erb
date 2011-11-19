@@ -1,0 +1,6 @@
+<% app_root = '/home/root/giasu_app/current' %>
+check process resque
+  with pidfile <%= app_root %>/tmp/pids/resque_worker.pid
+  start program = "/usr/bin/env RACK_ENV=production PATH=<%= `echo $PATH`%> /bin/sh -l -c 'cd <%= app_root%>; nohup bundle exec rake environment resque:work RAILS_ENV=production QUEUE=* VERBOSE=1 PIDFILE=tmp/pids/resque_worker.pid & >> log/resque_worker.log 2>&1'"
+  stop program = "/bin/sh -c 'cd <%= app_root %>&& kill -s QUIT `cat tmp/pids/resque_worker.pid` && rm -f tmp/pids/resque_worker.pid; exit 0;'"
+  if totalmem is greater than 150 MB for 10 cycles then restart

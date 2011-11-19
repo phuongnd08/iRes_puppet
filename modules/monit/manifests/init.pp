@@ -1,10 +1,4 @@
 class monit {
-    $configdir = "/etc/monit.d"
-    case $operatingsystem {
-        'CentOS': { $config = "/etc/monit.conf" }
-        default: { fail("\$operatingsystem of ${fqdn} is not recognized ( '${operatingsystem}' ). ") }
-    }
-
     package {
         "monit": ensure => installed;
     }
@@ -33,7 +27,7 @@ define monit::package()
     file { $name:
             path => "/etc/monit.d/${name}.conf",
             ensure => present,
-            content => template("monit/${name}.conf.erb"),
+            content => template("${name}/${name}.monit.erb"),
             group => root,
             require => File['/etc/monit.d'],
             notify => Service[monit],
