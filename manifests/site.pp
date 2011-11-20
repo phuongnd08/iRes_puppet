@@ -6,5 +6,6 @@ node default {
   include redis
   include push_server
   include resque
+  include cron
 }
 
