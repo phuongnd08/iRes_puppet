@@ -4,6 +4,10 @@ class cron {
     refresh_user_score:
       command => "/usr/bin/env PATH=${env_path} /bin/sh -l -c 'cd ${working_dir} && bundle exec script/refresh_user_score'",
       hour => 0,
-      minute => 1,
+      minute => 1;
+    backup_mysql:
+      command => "/var/backup/mysql/autobackup.sh",
+      hour => 1,
+      minute => 0
   }
 }
