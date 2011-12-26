@@ -7,16 +7,6 @@ node default {
   include push_server
   include resque
   include cron
-
-  firewall { '010 INPUT allow reverse tunnel':
-    action => accept,
-    proto => 'tcp',
-    dport => 3000,
-    chain => 'INPUT',
-  }
-
-  resources { 'firewall':
-    purge => true
-  }
+  include my_firewall
 }
 
