@@ -2,50 +2,20 @@ class my_firewall{
   stage { 'pre': before => Stage['main'] }
   stage { 'post': require => Stage['main'] }
 
-  class {
-    "my_firewall::accept":
-      stage => 'pre';
-
-    "my_firewall::reject":
-      stage => 'post';
-  }
-
-  resources { 'firewall':
-    purge => true
-  }
-
-  firewall { '01 INPUT redirect to MINE':
-    action => 'MINE',
-    proto => 'all',
-    chain => 'INPUT'
-  }
-
-  firewall { '02 FORWARD redirect to MINE':
-    action => 'MINE',
-    proto => 'all',
-    chain => 'FORWARD'
-  }
-
-  include my_firewall::accept
-  include my_firewall::reject
-}
-
-
-class my_firewall::accept {
-  firewall { '01 MINE allow web server':
+  firewall { '11 RH-Firewall-1-INPUT allow web server':
     action => accept,
     proto => 'tcp',
     state => 'NEW',
     dport => 80,
-    chain => 'MINE',
+    chain => 'RH-Firewall-1-INPUT',
   }
 
-  firewall { '02 MINE allow ssh tunnel':
+  firewall { '12 RH-Firewall-1-INPUT allow ssh tunnel':
     action => accept,
     proto => 'tcp',
     state => 'NEW',
     dport => 22,
-    chain => 'MINE',
+    chain => 'RH-Firewall-1-INPUT',
   }
 
   #  firewall { 'INPUT allow push server':
@@ -55,24 +25,38 @@ class my_firewall::accept {
   #    chain => 'INPUT',
   #  }
 
-  firewall { '04 MINE allow pinging':
+  firewall { '14 RH-Firewall-1-INPUT allow pinging':
     action => accept,
     proto => 'icmp',
-    chain => 'MINE',
+    chain => 'RH-Firewall-1-INPUT',
   }
 
-  firewall { '05 MINE allow reverse tunnel for debugging':
+  firewall { '15 RH-Firewall-1-INPUT allow reverse tunnel for debugging':
     action => accept,
     proto => 'tcp',
     dport => 3000,
-    chain => 'MINE',
+    chain => 'RH-Firewall-1-INPUT',
   }
-}
 
-class my_firewall::reject {
-  firewall { '06 MINE reject all unknown access':
+  firewall { '16 RH-Firewall-1-INPUT reject all unknown access':
     action => reject,
     proto => 'all',
-    chain => 'MINE'
+    chain => 'RH-Firewall-1-INPUT'
+  }
+
+  firewall { '21 INPUT redirect to RH-Firewall-1-INPUT':
+    jump => 'RH-Firewall-1-INPUT',
+    proto => 'all',
+    chain => 'INPUT'
+  }
+
+  firewall { '22 FORWARD redirect to RH-Firewall-1-INPUT':
+    jump => 'RH-Firewall-1-INPUT',
+    proto => 'all',
+    chain => 'FORWARD'
+  }
+
+  resources { 'firewall':
+    purge => true
   }
 }
