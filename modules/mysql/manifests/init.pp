@@ -1,6 +1,6 @@
 class mysql {
   package {
-    "mysql": ensure => installed;
+    "mysql-server": ensure => installed;
   }
 
   monit::package { "mysql": }
