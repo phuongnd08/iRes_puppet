@@ -3,10 +3,12 @@ node default {
   include sshd
   include mysql
   include rvm
-  rvm_system_ruby {
-    'ruby-1.9.3-p0':
-      ensure => 'present',
-      default_use => true;
+  if $rvm_installed == "true" {
+    rvm_system_ruby {
+      'ruby-1.9.3-p0':
+        ensure => 'present',
+        default_use => true;
+    }
   }
   #include push_server
   #include redis
