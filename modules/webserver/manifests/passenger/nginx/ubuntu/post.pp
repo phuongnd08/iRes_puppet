@@ -2,22 +2,34 @@ class webserver::passenger::nginx::ubuntu::post(
   $ruby_version,
   $version,
   $rvm_prefix = '/usr/local/',
+  $nginx_prefix = '/opt/nginx',
   $mininstances = '1',
   $maxpoolsize = '6',
   $poolidletime = '300',
   $maxinstancesperapp = '0',
   $spawnmethod = 'smart-lv2',
+  $passenger_version,
   $gempath,
-  $binpath
+  $binpath,
+  $wrapperpath
 ) {
 
   exec {
     'passenger-install-nginx-module':
-      command   => "${binpath}rvm ${ruby_version} exec passenger-install-nginx-module --auto --auto-download --prefix=/opt/nginx",
-      creates   => "/opt/nginx/sbin/nginx",
+      command   => "${binpath}rvm ${ruby_version} exec passenger-install-nginx-module --auto --auto-download --prefix=${nginx_prefix}",
+      creates   => "${nginx_prefix}/sbin/nginx",
       logoutput => 'on_failure',
       require   => [Rvm_gem['passenger'], Package['build-essential']],
   }
+
+  file {
+    "${nginx_prefix}/conf/nginx.conf":
+        ensure => present,
+        content => template("webserver/nginx.conf.erb"),
+        group => root
+        #notify => Service[nginx],
+  }
+
   #
   #  file {
   #    '/etc/apache2/mods-available/passenger.load':

@@ -1,6 +1,8 @@
-class webserver::ruby {
+class webserver::ruby(
+  $ruby_version
+) {
   rvm_system_ruby {
-    'ruby-1.9.3-p125':
+    $ruby_version:
       ensure => 'present',
       default_use => true;
   }

@@ -1,0 +1,9 @@
+server {
+    listen 80;
+    server_name localhost;
+    rails_env production;
+    keepalive_timeout    70;
+    root /home/deploy/ires/current/public;   # <--- be sure to point to 'public'!
+    passenger_enabled on;
+}
+

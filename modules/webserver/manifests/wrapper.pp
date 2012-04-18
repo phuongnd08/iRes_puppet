@@ -1,7 +1,9 @@
-class webserver::wrapper {
+class webserver::wrapper(
+  $ruby_version
+) {
   rvm_gemset {
-    "ruby-1.9.3-p125@ires":
+    "${ruby_version}@ires":
       ensure => present,
-      require => Rvm_system_ruby['ruby-1.9.3-p125'];
+      require => Rvm_system_ruby[$ruby_version];
   }
 }
