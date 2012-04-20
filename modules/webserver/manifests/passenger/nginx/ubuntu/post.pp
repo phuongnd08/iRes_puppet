@@ -30,6 +30,13 @@ class webserver::passenger::nginx::ubuntu::post(
         #notify => Service[nginx],
   }
 
+  file {
+    ["${nginx_prefix}/conf/conf.d", "${nginx_prefix}/conf/conf.d/sites-enabled"]:
+      ensure => directory,
+      recurse => true,
+      force => true
+  }
+
   #
   #  file {
   #    '/etc/apache2/mods-available/passenger.load':
