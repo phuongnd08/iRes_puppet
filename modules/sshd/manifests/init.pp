@@ -1,4 +1,9 @@
 class sshd{
+  package {
+    "openssh-server":
+      ensure => installed
+  }
+
   monit::package { "sshd": }
 
   ssh_authorized_key {
