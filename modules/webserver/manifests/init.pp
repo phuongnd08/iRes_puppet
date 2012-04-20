@@ -1,5 +1,6 @@
 class webserver {
   include rvm
+  include mysql
   stage { "ruby": require => Stage["rvm-install"] }
   stage { "post-ruby": require => Stage["ruby"] }
   if ($rvm_installed == "true") {
@@ -16,21 +17,9 @@ class webserver {
         ruby_version => $ruby_version,
         nginx_prefix => $nginx_prefix,
         stage => "post-ruby";
-    }
-
-    file {
-      "${nginx_prefix}/conf/conf.d/sites-enabled":
-        ensure => directory,
-        recurse => true,
-        force => true
-    }
-
-    file {
-      "${nginx_prefix}/conf/conf.d/sites-enabled/ires.conf":
-        ensure => present,
-        recurse => true,
-        content => template("webserver/ires.conf.erb"),
-        require => File["${nginx_prefix}/conf/conf.d/sites-enabled"]
+      "webserver::ires":
+        nginx_prefix => $nginx_prefix,
+        stage => "post-ruby";
     }
   }
 }
