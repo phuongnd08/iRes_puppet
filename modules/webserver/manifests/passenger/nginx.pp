@@ -23,9 +23,9 @@ class webserver::passenger::nginx(
   # TODO: How can we get the gempath automatically using the ruby version
   # Can we read the output of a command into a variable?
   # e.g. $gempath = `usr/local/rvm/bin/rvm ${ruby_version} exec rvm gemdir`
-  $gempath = "${rvm_prefix}rvm/gems/${ruby_version}/gems"
+  $gempath = "${rvm_prefix}rvm/gems/ruby-${ruby_version}/gems"
   $binpath = "${rvm_prefix}rvm/bin/"
-  $wrapperpath = "${rvm_prefix}rvm/wrapper/${ruby_version}/ruby"
+  $wrapperpath = "${rvm_prefix}rvm/wrappers/ruby-${ruby_version}/ruby"
 
   case $operatingsystem {
     Ubuntu: {
