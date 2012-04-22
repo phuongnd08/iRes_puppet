@@ -19,7 +19,7 @@ class mysql {
 define mysql::mysqldb {
   exec { "create-${name}-db":
     unless => "/usr/bin/mysql -uroot ${name}",
-    command => "/usr/bin/mysql -uroot -e 'create database ${name}'",
+    command => "/usr/bin/mysql -uroot -e 'create database ${name} CHARACTER SET utf8 COLLATE utf8_general_ci;'",
     require => Package["mysql-server"],
   }
 }
