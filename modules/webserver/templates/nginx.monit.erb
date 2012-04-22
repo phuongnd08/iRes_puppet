@@ -1,0 +1,4 @@
+check process nginx with pidfile /opt/nginx/logs/nginx.pid
+  start program = "/opt/nginx/sbin/nginx"
+  stop program  = "/opt/nginx/sbin/nginx -s stop"
+  if failed host 127.0.0.1 port 80 then restart

@@ -37,6 +37,11 @@ class webserver::passenger::nginx::ubuntu::post(
       force => true
   }
 
+  monit::package {
+    "nginx":
+      content => template("webserver/nginx.monit.erb")
+  }
+
   #
   #  file {
   #    '/etc/apache2/mods-available/passenger.load':
