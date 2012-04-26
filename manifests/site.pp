@@ -4,8 +4,8 @@ node default {
   include mysql
   include webserver
   include rvm
-  
-  #include push_server
+  include push_server
+
   #include redis
   #include resque
   #include cron
