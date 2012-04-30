@@ -24,6 +24,7 @@ class webserver::passenger::nginx::ubuntu::post(
 
   class {
     "webserver::passenger::nginx::ubuntu::config":
+      nginx_prefix => $nginx_prefix,
       require   => Exec["passenger-install-nginx-module"]
   }
 
