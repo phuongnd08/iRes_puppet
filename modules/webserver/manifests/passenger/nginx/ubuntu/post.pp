@@ -22,24 +22,9 @@ class webserver::passenger::nginx::ubuntu::post(
       require   => [Rvm_gem['passenger'], Package['build-essential']],
   }
 
-  file {
-    "${nginx_prefix}/conf/nginx.conf":
-        ensure => present,
-        content => template("webserver/nginx.conf.erb"),
-        group => root
-        #notify => Service[nginx],
-  }
-
-  file {
-    ["${nginx_prefix}/conf/conf.d", "${nginx_prefix}/conf/conf.d/sites-enabled"]:
-      ensure => directory,
-      recurse => true,
-      force => true
-  }
-
-  monit::package {
-    "nginx":
-      content => template("webserver/nginx.monit.erb")
+  class {
+    "webserver::passenger::nginx::ubuntu::config":
+      require   => Exec["passenger-install-nginx-module"]
   }
 
   #
