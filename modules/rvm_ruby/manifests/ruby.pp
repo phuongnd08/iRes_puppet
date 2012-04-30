@@ -1,4 +1,4 @@
-class webserver::ruby(
+class rvm_ruby::ruby(
   $ruby_version
 ) {
   rvm_system_ruby {
