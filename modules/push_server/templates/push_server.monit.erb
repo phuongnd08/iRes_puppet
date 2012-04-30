@@ -1,5 +1,5 @@
 check process push_server with pidfile /home/deploy/push_app/current/tmp/thin.pid
-  start program = "/usr/bin/env PATH=<%= `echo $PATH` %> /bin/sh -c 'cd /home/deploy/push_app/current && <%= rvmshell %> '<%= gemset%>' -c 'bundle exec thin -C thin/production.yml -R config.ru start'"
+  start program = "<%= rvmshell %> <%= gemset%> -c 'cd /home/deploy/push_app/current && bundle exec thin -C thin/production.yml -R config.ru start'"
     as uid deploy and gid deploy
-  stop program = "/usr/bin/env PATH=<%= `echo $PATH` %> /bin/sh -c 'cd /home/deploy/push_app/current && <%= rvmshell %> '<%= gemset%>' -c 'bundle exec thin -C thin/production.yml -R config.ru stop'"
+  stop program = "<%= rvmshell %> <%= gemset%> -c 'cd /home/deploy/push_app/current && bundle exec thin -C thin/production.yml -R config.ru stop'"
     as uid deploy and gid deploy
