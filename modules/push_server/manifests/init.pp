@@ -3,10 +3,16 @@ class push_server {
   include rvm_ruby
   if ($rvm_installed == "true") {
     $ruby_version = "1.9.3-p125"
+
+    if ! defined(Class['rvm_ruby::ruby']) {
+      class {
+        "rvm_ruby::ruby":
+          ruby_version => $ruby_version,
+          stage => "ruby";
+      }
+    }
+
     class {
-      "rvm_ruby::ruby":
-        ruby_version => $ruby_version,
-        stage => "ruby";
       "push_server::wrapper":
         ruby_version => $ruby_version,
         stage => "post-ruby";

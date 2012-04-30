@@ -5,10 +5,16 @@ class webserver {
   if ($rvm_installed == "true") {
     $ruby_version = "1.9.3-p125"
     $nginx_prefix = "/opt/nginx"
+
+    if ! defined(Class['rvm_ruby::ruby']) {
+      class {
+        "rvm_ruby::ruby":
+          ruby_version => $ruby_version,
+          stage => "ruby";
+      }
+    }
+
     class {
-      "rvm_ruby::ruby":
-        ruby_version => $ruby_version,
-        stage => "ruby";
       "webserver::wrapper":
         ruby_version => $ruby_version,
         stage => "post-ruby";
