@@ -1,4 +1,5 @@
 class webserver::ires(
+  $ruby_version,
   $nginx_prefix
 ) {
 
@@ -19,5 +20,12 @@ class webserver::ires(
 
   mysql::mysqldb {
     "iRes_prod":
+  }
+
+  $gemset = "${ruby_version}@ires"
+  $rvmshell = "/usr/local/rvm/bin/rvm-shell"
+  monit::package {
+    "ires":
+      content => template("webserver/ires.monit.erb")
   }
 }

@@ -1,9 +1,11 @@
 server {
     listen 80;
     server_name localhost;
-    rails_env production;
-    keepalive_timeout    70;
-    root /home/deploy/ires/current/public;   # <--- be sure to point to 'public'!
-    passenger_enabled on;
+    location / {
+      proxy_set_header  X-Real-IP  $remote_addr;
+      proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $http_host;
+      proxy_redirect false;
+      proxy_pass http://localhost:3000;
+    }
 }
-

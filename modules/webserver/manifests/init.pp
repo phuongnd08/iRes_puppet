@@ -24,6 +24,7 @@ class webserver {
         stage => "post-ruby";
       "webserver::ires":
         nginx_prefix => $nginx_prefix,
+        ruby_version => $ruby_version,
         stage => "post-ruby";
     }
   }

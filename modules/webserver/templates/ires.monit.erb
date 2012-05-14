@@ -1,0 +1,5 @@
+check process ires_server with pidfile /home/deploy/ires/current/tmp/thin.pid
+  start program = "<%= rvmshell %> <%= gemset%> -c 'cd /home/deploy/ires/current && bundle exec thin -C thin/production.yml -R config.ru start'"
+    as uid deploy and gid deploy
+  stop program = "<%= rvmshell %> <%= gemset%> -c 'cd /home/deploy/ires/current && bundle exec thin -C thin/production.yml -R config.ru stop'"
+    as uid deploy and gid deploy
