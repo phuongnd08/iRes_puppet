@@ -10,7 +10,16 @@ class sshd{
     "phuongnd08@ubuntu-server":
       ensure => "present",
       type => "ssh-rsa",
-      key => template("sshd/deploy_key.erb"),
+      key => template("sshd/deploy_key_phuong_desktop.erb"),
+      target => "/home/deploy/.ssh/authorized_keys",
+      user => "deploy"
+  }
+
+  ssh_authorized_key {
+    "phuongnd08@laptop":
+      ensure => "present",
+      type => "ssh-rsa",
+      key => template("sshd/deploy_key_phuong_laptop.erb"),
       target => "/home/deploy/.ssh/authorized_keys",
       user => "deploy"
   }
