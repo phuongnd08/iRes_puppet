@@ -2,6 +2,11 @@ class webserver {
   include rvm
   include rvm_ruby
   include mysql
+
+  package {
+    "cups-bsd": ensure => installed;
+  }
+
   if ($rvm_installed == "true") {
     $ruby_version = "1.9.3-p125"
     $nginx_prefix = "/opt/nginx"
