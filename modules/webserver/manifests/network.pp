@@ -7,6 +7,14 @@ class webserver::network(
     owner => root,
     group => root,
     mode => 644,
-    content => template("webserver/network.erb")
+    content => template("webserver/network/interfaces.erb")
   }
+
+  file { "/etc/resolv.conf":
+    owner => root,
+    group => root,
+    mode => 644,
+    content => template("webserver/network/resolv.erb")
+  }
+
 }
